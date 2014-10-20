@@ -1,0 +1,14 @@
+{
+  "name": "buzzdeee-gsdefaults",
+  "version": "0.1.0",
+  "author": "Sebastian Reitenbach",
+  "summary": "A puppet module to manage GNUstep application defaults",
+  "license": "Apache 2.0",
+  "source": "https://github.com/buzzdeee/buzzdeee-gsdefaults.git",
+  "project_page": "https://github.com/buzzdeee/buzzdeee-gsdefaults",
+  "issues_url": "https://github.com/buzzdeee/buzzdeee-gsdefaults/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
