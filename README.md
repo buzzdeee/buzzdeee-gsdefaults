@@ -110,7 +110,7 @@ Tested and known to work on OpenBSD -current with Puppet 3.7.3.
 
 Please help me make this module awesome!  Send pull requests and file issues.
 
-## Release Notes/Contributors/Etc **Optional**
+## Release Notes
 
 ### Version 0.1.0
  * initial release
