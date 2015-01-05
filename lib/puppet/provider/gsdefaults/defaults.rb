@@ -7,26 +7,48 @@ Puppet::Type.type(:gsdefaults).provide(:defaults) do
   def create
     sudocmd('-u', @resource.value(:user), "defaults", "write", "#{@resource.value(:domain)}", "#{@resource.value(:key)}", "#{@resource.value(:value)}")
   end
+  def keyonly
+    self.create
+  end
 
   def destroy
     sudocmd('-u', @resource.value(:user), "defaults", "delete", "#{@resource.value(:domain)}", "#{@resource.value(:key)}")
   end
 
-  def exists?
+  def read_key
     begin
-      cmdresult = sudocmd('-u', @resource.value(:user), "defaults", "read", "#{@resource.value(:domain)}", "#{@resource.value(:key)}")
-      currvalue = cmdresult.split[2..-1].join(' ')
-      if currvalue == true
-        currvalue = 'YES'
-      end
-      if currvalue.gsub(/\s+/, "").gsub(/['"]/,"") == @resource.value(:value).gsub(/\s+/, "").gsub(/['"]/,"")
-        true
-      else
-        Puppet.notice("replacing old value: #{currvalue} with new value: #{@resource.value(:value)}")
-        false
-      end
+      sudocmd('-u', @resource.value(:user), "defaults", "read", "#{@resource.value(:domain)}", "#{@resource.value(:key)}")
     rescue Puppet::ExecutionFailure
       false
     end
   end
+
+  def exists?
+    keyvalue_exists? || keyonly_exists?
+  end
+
+  def keyonly_exists?
+    cmdresult = read_key
+    return false unless cmdresult
+    if cmdresult.size > 0
+      return true
+    else
+      return false
+    end
+  end
+
+  def keyvalue_exists?
+    cmdresult = read_key
+    return false unless cmdresult
+    currvalue = cmdresult.split[2..-1].join(' ')
+    if currvalue == true
+      currvalue = 'YES'
+    end
+    if currvalue.gsub(/\s+/, "").gsub(/['"]/,"") == @resource.value(:value).gsub(/\s+/, "").gsub(/['"]/,"")
+      return true
+    else
+      return false
+    end
+  end
+
 end
