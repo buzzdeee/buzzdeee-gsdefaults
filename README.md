@@ -112,5 +112,7 @@ Please help me make this module awesome!  Send pull requests and file issues.
 
 ## Release Notes
 
-### Version 0.1.0
+### Version 0.1.0 (2015-01-05)
  * initial release
+### Version 0.1.1 (2015-01-05)
+ * minimal fixups to please the metadata score
