@@ -33,7 +33,7 @@ Puppet::Type.newtype(:gsdefaults) do
       @should ||= []
       case should
       when :present
-        return true unless [ :absent ].include?(is)
+        return true unless [ :absent, :keyonly ].include?(is)
       when :keyonly
         return true unless [ :absent ].include?(is)
       when :absent
