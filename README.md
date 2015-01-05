@@ -15,33 +15,33 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+This module doesn't configure a specific service, but manages GNUstep 
+based application and server configurations. 
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+This module provides basic management of GNUstep configurations,
+usually managed via the 'defaults' command.
+Key/Value pairs can be defined for a given user/domain.
+Values can be ensured as either 'present', 'absent', or 'keyonly'.
+The 'keyonly' only ensures the existence of the given key, but doesn't
+verify its value.
 
 ## Setup
 
 ### What gsdefaults affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+ * You can manage any key/value pair for any given domain for a specific
+   user.
+ * Everything possible as legal value, i.e. an array, dictionary, string
+   or boolean can be passed as value.
 
 ### Setup Requirements **OPTIONAL**
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+The module is a Ruby only module, to make use of it, pluginsync must
+be enabled.
+This module is intended to be used by other modules. Those other modules
+must somehow ensure that gnustep-base 'defaults' command is available.
 
 ### Beginning with gsdefaults
 
@@ -58,22 +58,59 @@ the fancy stuff with your module here.
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+The module provides a custom ruby type: 'gsdefaults'.
+
+### Example usage:
+
+```puppet
+
+   gsdefaults { 'a_unique_name_here':
+     ensure => 'present',
+     user   => 'exampleuser',
+     domain => 'NSGlobalDomain',
+     key    => 'testkey',
+     value  => 'testvalue',
+   }
+```
+
+### Parameters
+
+#### ensure
+This parameter is optional, valid values are:
+ - present (default)
+  - makes sure all parameters exist as they should
+ - absent
+ - keyonly
+  - works like present, but only makes sure that the key exists,
+    regardless of the given value
+
+#### user
+This parameter is optional, valid values are:
+ - valid user names
+ - default value is 'root'
+
+#### domain
+This parameter is optional, valid values are:
+ - a string
+ - default value is 'NSGlobalDomain'
+
+#### key
+This parameter is mandatory, valid values are:
+ - a string
+
+#### value
+This parameter is mandatory, except for ensure => 'absent'
+ - any valid value type you can hand over to the GNUstep 'defaults' tool
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Tested and known to work on OpenBSD -current with Puppet 3.7.3.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+Please help me make this module awesome!  Send pull requests and file issues.
 
 ## Release Notes/Contributors/Etc **Optional**
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+### Version 0.1.0
+ * initial release
