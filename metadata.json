@@ -7,7 +7,7 @@
   "source": "https://github.com/buzzdeee/buzzdeee-gsdefaults.git",
   "project_page": "https://github.com/buzzdeee/buzzdeee-gsdefaults",
   "issues_url": "https://github.com/buzzdeee/buzzdeee-gsdefaults/issues",
-  "dependencies": [ ]
+  "dependencies": [ ],
   "operatingsystem_support": [
     {
     "operatingsystem":"OpenBSD",
