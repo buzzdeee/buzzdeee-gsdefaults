@@ -41,6 +41,7 @@ Puppet::Type.type(:gsdefaults).provide(:defaults) do
     cmdresult = read_key
     return false unless cmdresult
     currvalue = cmdresult.split[2..-1].join(' ')
+    puts currvalue
     if currvalue == true
       currvalue = 'YES'
     end
