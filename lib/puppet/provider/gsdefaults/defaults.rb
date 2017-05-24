@@ -17,7 +17,7 @@ Puppet::Type.type(:gsdefaults).provide(:defaults) do
 
   def read_key
     begin
-      sudocmd('-u', @resource.value(:user), "defaults", "read", "#{@resource.value(:domain)}", "#{@resource.value(:key)}")
+      sudocmd('-u', @resource.value(:user), "defaults", "read", "#{@resource.value(:domain)}", "#{@resource.value(:key)}", "2>/dev/null")
     rescue Puppet::ExecutionFailure
       false
     end
